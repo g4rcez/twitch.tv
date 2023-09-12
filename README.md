@@ -1,3 +1,6 @@
+1. [twitch.tv](#twitchtv)
+1. [2023-09-07](#2023-09-07)
+
 # twitch.tv
 
 Repositório com as lives feitas no meu canal da [Twitch](https://twitch.tv/allangarcez)
