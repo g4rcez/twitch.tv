@@ -14,7 +14,8 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "use-sync-external-store": "1.2.0",
-    "use-typed-reducer": "3.2.4"
+    "use-typed-reducer": "3.2.4",
+    "zustand": "4.4.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",
