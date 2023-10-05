@@ -2,6 +2,9 @@
 .obsidian/workspaces.json
 .obsidian/appearance.json
 .DS_Store
+./**/.DS_Store
 **/node_modules**
 /node_modules**
 /node_modules
+.env
+./**/.env

@@ -1,0 +1,22 @@
+version: "3"
+services:
+  postgres:
+    image: postgres
+    restart: always
+    volumes:
+      - ./pg:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DATABASE_LOCAL: shortlink
+      POSTGRES_DB: shortlink
+      POSTGRES_HOST_LOCAL: localhost
+      POSTGRES_PASSWORD_LOCAL: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_PORT_LOCAL: 5432
+      POSTGRES_USER_LOCAL: postgres
+    ports:
+      - "9999:5432"
+    networks:
+      - network
+networks:
+  network:
+    driver: bridge

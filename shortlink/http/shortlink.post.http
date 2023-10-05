@@ -1,0 +1,8 @@
+POST /api/shortlink
+Host: localhost:3000
+Content-Type: application/json
+
+{
+  "name": "google",
+  "url": "https://google.com"
+}
