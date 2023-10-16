@@ -1,4 +1,6 @@
 [
   "nldates-obsidian",
-  "obsidian-plugin-toc"
+  "obsidian-plugin-toc",
+  "obsidian-charts",
+  "dataview"
 ]

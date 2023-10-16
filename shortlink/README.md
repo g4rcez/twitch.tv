@@ -38,3 +38,15 @@ pnpm dev
 ```
 
 Pronto, seu servidor e banco estão online e você pode acessar `http://localhost:3000`.
+
+
+## Testes
+
+### Unidade
+
+### TDD - Type Driven Development
+
+### TDD - Test Driven Design
+
+### Integração
+

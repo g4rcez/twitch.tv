@@ -17,6 +17,27 @@ services:
       - "9999:5432"
     networks:
       - network
+  node:
+    image: node:18.18.0
+    environment:
+      DATABASE_USER: "postgres"
+      DATABASE_PASSWORD: "postgres"
+      DATABASE_PORT: "postgres"
+      DATABASE_NAME: "postgres"
+      DATABASE_HOST: "localhost"
+    depends_on:
+      - postgres
+    ports:
+      - "3000:3000"
+    networks:
+      - network
+    env_file: .env
+    volumes:
+      - .:/home/node/app
+    command:
+      - npm install
+      - npm run tests
+
 networks:
   network:
     driver: bridge
