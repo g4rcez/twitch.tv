@@ -1,0 +1,17 @@
+{
+    "arrowParens": "always",
+    "bracketSpacing": true,
+    "cursorOffset": -1,
+    "jsxSingleQuote": false,
+    "plugins": [],
+    "printWidth": 150,
+    "quoteProps": "as-needed",
+    "rangeEnd": -1,
+    "rangeStart": 1,
+    "semi": true,
+    "singleAttributePerLine": false,
+    "singleQuote": false,
+    "trailingComma": "all",
+    "tabWidth": 4,
+    "useTabs": false
+}
