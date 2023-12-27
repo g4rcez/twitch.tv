@@ -6,14 +6,14 @@ export namespace Secrets {
         id: string;
         created_at: string;
         deleted_at: string | null;
-        secret: string;
+        passphrase: string;
     };
 
     export type Type = {
         id: string;
         createdAt: Date;
         deletedAt: Date | null;
-        secret: string;
+        passphrase: string;
     };
 
     export const get = async (): Promise<Either<Error, Type>> => {
@@ -26,9 +26,9 @@ export namespace Secrets {
             return row
                 ? Either.success({
                       id: row.id,
-                      secret: row.secret,
+                      passphrase: row.passphrase,
+                      deletedAt: null,
                       createdAt: new Date(row.created_at),
-                      deletedAt: row.deleted_at ? new Date(row.deleted_at) : null,
                   })
                 : Either.error(new Error("Cannot find secret"));
         } catch (e) {

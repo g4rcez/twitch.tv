@@ -1,46 +1,50 @@
-import { FastifyRequest, FastifyReply } from "fastify";
 import { Secrets } from "../database/secrets";
-import { z } from "zod";
 import { Jwt } from "./jwt";
-import { Strings } from "../lib/strings";
+import { StatusCode } from "../lib/http";
+import { Users } from "../database/users";
+import { S } from "fluent-json-schema";
+import { createEndpoint } from "../lib/fastify";
 
 export namespace Login {
-    const loginSchema = z.object({
-        email: z.string().email(),
-        password: z.string().min(8),
-    });
+    type LoginBody = { email: string; password: string; publicKey: string };
+    const roles = ["admin.user"];
 
-    const user = {
-        name: "Fulano",
-        email: "fulano@ciclano.com",
-        password: "#Senha123",
-    };
+    const createJwt = async (secret: Secrets.Type, user: Users.Type) =>
+        Jwt.create(
+            secret,
+            {
+                email: user.email,
+                name: user.name,
+                id: user.id,
+            },
+            roles,
+        );
 
-    const createJwt = async (secret: Secrets.Type, jwtUser: { email: string; name: string }) => {
-        return Jwt.create(secret, {
-            email: jwtUser.email,
-            name: jwtUser.name,
-            id: Strings.uuid(),
-        });
-    };
-
-    export const auth = async (req: FastifyRequest, res: FastifyReply) => {
-        const body = req.body;
-        const validate = loginSchema.safeParse(body);
-        if (validate.success) {
-            const data = validate.data;
-            if (data.email === user.email && data.password === user.password) {
+    export const auth = createEndpoint(
+        async (req, res) => {
+            const data = req.body as LoginBody;
+            const user = await Users.getByCredentials(data.email, data.password);
+            if (user.isSuccess()) {
                 const secret = await Secrets.get();
                 if (secret.isSuccess()) {
-                    const token = await createJwt(secret.success, user);
-                    res.headers({
-                        "Set-Cookie": `Authorization=${token}`,
-                    });
+                    const token = await createJwt(secret.success, user.success);
+                    res.headers({ "Set-Cookie": `Authorization=${token};httponly=true` }).status(StatusCode.Created);
                     return { jwt: token };
                 }
             }
-        }
-        res.status(401);
-        return { hack: "the planet" };
-    };
+
+            res.status(StatusCode.NotAuthorized);
+            return { errors: [user.error.message ?? "Unknown"] };
+        },
+        {
+            schema: {
+                body: S.object<LoginBody>()
+                    .prop("email", S.string().format(S.FORMATS.EMAIL).required())
+                    .prop("password", S.string().minLength(8).required())
+                    .id("loginSchema")
+                    .title("Login Schema")
+                    .description("Should validate the credentials for login"),
+            },
+        },
+    );
 }

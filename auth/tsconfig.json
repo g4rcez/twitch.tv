@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "types": ["@fastify/express"],
     "incremental": false,
     "target": "es2016",
     "lib": [

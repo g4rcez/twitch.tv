@@ -34,8 +34,8 @@ export namespace Database {
     };
 
     export const startup = async () =>
-        await sql`SELECT id, secret, created_at, deleted_at
-                                                 FROM secrets`;
+        await sql`SELECT *
+                  FROM secrets`;
 
     export const shutdown = () => db.end();
 }

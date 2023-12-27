@@ -10,14 +10,15 @@ export namespace Jwt {
 
     const issuer = "018bd4f4-df84-78fb-b529-4d9ae71be97b";
 
-    export const create = (secret: Secrets.Type, jwtUser: JwtUser) =>
+    export const create = (secret: Secrets.Type, jwtUser: JwtUser, roles: string[]) =>
         sign(
             {
                 name: jwtUser.name,
                 email: jwtUser.email,
                 id: jwtUser.id,
+                roles,
             },
-            secret.secret,
+            secret.passphrase,
             {
                 issuer,
                 algorithm: "HS256",
@@ -27,7 +28,7 @@ export namespace Jwt {
         );
 
     export const validate = (token: string, secret: Secrets.Type) =>
-        verify(token, secret.secret, {
+        verify(token, secret.passphrase, {
             issuer,
             complete: true,
             algorithms: ["HS256"],

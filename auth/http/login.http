@@ -2,11 +2,6 @@ POST http://localhost:5000/login
 Content-Type: application/json
 
 {
-  "email": "fulano@ciclano.com",
-  "password": "#Senha123"
+  "email": "teste@teste.com.br",
+  "password": "#Trocar123"
 }
-> {% client.global.set("auth_token", response.body.jwt); %}
-
-###
-GET http://localhost:5000/test
-Cookie: "Authorization={{auth_token}}"
